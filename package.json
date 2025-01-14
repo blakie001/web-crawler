@@ -6,8 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "dev": "node ./bullmq/worker.js",
+    "dev": "nodemon ./bullmq/worker.js",
     "dev:all": "npm-run-all --parallel start dev",
+    "prod:server": "node index.js",
+    "prod:worker": "node ./bullmq/worker.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
