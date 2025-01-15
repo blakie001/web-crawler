@@ -1,6 +1,7 @@
 import { Worker } from "bullmq";
 import { crawlPage } from "../utils/crawlPage.js";
 import fs from "fs";
+import Redis from "ioredis";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -14,7 +15,28 @@ const logUrls = (domain, urls) => {
     fs.appendFileSync("crawled_urls.json", JSON.stringify(logData, null, 2) + "\n");
 };
 
-const redisUrl = process.env.REDIS_URL;
+let redis;
+try {
+    redis = new Redis({
+        url: process.env.REDIS_URL,
+        maxRetriesPerRequest: null,        
+    });
+    // redis = new Redis({
+    //     host: process.env.REDIS_HOST,
+    //     port: process.env.REDIS_PORT,
+    //     password: process.env.REDIS_PASSWORD,
+    // });
+    redis.on('connect', () => {
+        console.log('Connected to Redis!');
+    });
+    await redis.set("foo", "bar");
+    console.log(`Redis Connected with worker`);
+
+} catch (error) {
+    console.log("Error connecting Redis Server", error);
+    process.exit(1);
+}
+
 
 const worker = new Worker(
     "url-crawling",
@@ -32,9 +54,7 @@ const worker = new Worker(
         }
     },
     {
-        connection: {
-            url: redisUrl,
-        },
+        connection: redis,
         concurrency: 5,
     }
 );
@@ -57,3 +77,16 @@ worker.on("error", (err) => {
 });
 
 console.log("Worker is listening for jobs...");
+
+
+process.on("SIGINT", async () => {
+    console.log("Shutting Down Redis Server from Worker");
+    if (redis) await redis.quit();
+    process.exit(0);
+});
+
+process.on("SIGTERM", async () => {
+    console.log("Shutting Down Redis Server from Worker");
+    if (redis) await redis.quit();
+    process.exit(0);
+});

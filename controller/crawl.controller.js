@@ -1,5 +1,4 @@
 import { addToQueue } from "../bullmq/queue.js";
-import { checkQueueStatus } from "../bullmq/queue.js";
 
 export const crawlController = async(req, res) =>{
     const { domains } = req.body;
@@ -9,7 +8,6 @@ export const crawlController = async(req, res) =>{
     try {
         await Promise.all(domains.map((domain) => {
             addToQueue(domain);
-            checkQueueStatus();
         }))
         return res.status(200).json("Domains Added TO Queue");
     } catch (error) {
