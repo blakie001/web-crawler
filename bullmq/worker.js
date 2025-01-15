@@ -35,7 +35,7 @@ const worker = new Worker(
             port: process.env.REDIS_PORT,
             password: process.env.REDIS_PASSWORD,
         },
-        concurrency: process.env.PARALLEL_PROCESSES || 5,
+        concurrency: 5,
     }
 );
 
