@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "dev": "node ./bullmq/worker.js",
+    "dev": "nodemon ./bullmq/worker.js",
     "dev:all": "npm-run-all --parallel start dev",
     "test": "echo \"Error: no test specified\" && exit 1"
 

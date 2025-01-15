@@ -31,16 +31,11 @@ const worker = new Worker(
     },
     {
         connection: {
-            url: redisUrl,
-            maxRetriesPerRequest: 10,
-            retryStrategy: (times) => Math.min(times * 100, 2000),
-            connectTimeout: 10000,
-            readTimeout: 10000,
-            writeTimeout: 10000,
+            host: process.env.REDIS_HOST,
+            port: process.env.REDIS_PORT,
+            password: process.env.REDIS_PASSWORD,
         },
-        concurrency: parseInt(process.env.PARALLEL_PROCESSES, 10) || 10,
-        stallInterval: 1000 * 30,
-        maxStalledCount: 3,
+        concurrency: process.env.PARALLEL_PROCESSES || 5,
     }
 );
 
