@@ -3,7 +3,6 @@ export const productPatterns = [
     /\/product\//i,
     /\/items\//i,
     /\/p\//i,
-    /\/b\//i,
     /\/itm\//i,
     /\/product-id\//i,
     /\/product-details\//i,
@@ -15,6 +14,7 @@ export const productPatterns = [
 export const categoryPatterns = [
     /\/category\//i,
     /\/c\//i,
+    /\/b\//i,
     /\/shop\//i,
     /\/collections\//i,
     /\/mobiles\//i,
