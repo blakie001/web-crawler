@@ -1,6 +1,9 @@
 import { Worker } from "bullmq";
 import { crawlPage } from "../utils/crawlPage.js";
 import fs from "fs";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const logUrls = (domain, urls) => {
     const logData = {
@@ -12,6 +15,7 @@ const logUrls = (domain, urls) => {
 };
 
 const redisUrl = process.env.REDIS_URL;
+console.log(redisUrl)
 
 const worker = new Worker(
     "url-crawling",
@@ -21,7 +25,6 @@ const worker = new Worker(
         try {
             const productLinks = await crawlPage(domain);
             console.log(`Crawled ${domain} and fetched ${productLinks.length} URLs`);
-
             logUrls(domain, productLinks);
             return productLinks;
         } catch (error) {
@@ -31,15 +34,13 @@ const worker = new Worker(
     },
     {
         connection: {
-            host: process.env.REDIS_HOST,
-            port: process.env.REDIS_PORT,
-            password: process.env.REDIS_PASSWORD,
+            url: redisUrl,
         },
         concurrency: 5,
     }
 );
 
-
+// Worker event listeners
 worker.on("active", (job) => {
     console.log(`Job is active: ${job.id}, Domain: ${job.data.domain}`);
 });
