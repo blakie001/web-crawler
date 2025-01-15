@@ -19,6 +19,7 @@ let redis;
 try {
     redis = new Redis(process.env.REDIS_URL, {
         tls: {},
+        maxRetriesPerRequest: null,
     });
     // redis = new Redis({
     //     host: process.env.REDIS_HOST,
