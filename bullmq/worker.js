@@ -17,9 +17,8 @@ const logUrls = (domain, urls) => {
 
 let redis;
 try {
-    redis = new Redis({
-        url: process.env.REDIS_URL,
-        maxRetriesPerRequest: null,        
+    redis = new Redis(process.env.REDIS_URL, {
+        tls: {},
     });
     // redis = new Redis({
     //     host: process.env.REDIS_HOST,
