@@ -15,7 +15,6 @@ const logUrls = (domain, urls) => {
 };
 
 const redisUrl = process.env.REDIS_URL;
-console.log(redisUrl)
 
 const worker = new Worker(
     "url-crawling",
