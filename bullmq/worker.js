@@ -5,27 +5,38 @@ import Redis from "ioredis";
 import dotenv from "dotenv";
 
 dotenv.config();
-
 const logUrls = (domain, urls) => {
+    const filePath = "/tmp/crawled_urls.json"; 
     const logData = {
         domain: domain,
         urls: urls,
         timestamp: new Date().toString(),
     };
-    fs.appendFileSync("crawled_urls.json", JSON.stringify(logData, null, 2) + "\n");
+    try {
+        if (!fs.existsSync("/tmp")) {
+            fs.mkdirSync("/tmp", { recursive: true });
+        }
+
+        fs.appendFileSync(filePath, JSON.stringify(logData, null, 2) + "\n");
+        console.log(`Url's Are written to ${filePath}`);
+    } catch (error) {
+        console.error("Error writing log to file:", error.message);
+    }
 };
+
+let local = process.env.REDIS_LOCAL;
+
 
 let redis;
 try {
-    redis = new Redis(process.env.REDIS_URL, {
-        tls: {},
+    redis = new Redis(local ? {
+        host: "127.0.0.1",
+        port: 6379
+    } : process.env.REDIS_URL, {
+        tls: !local ? {} : undefined,
         maxRetriesPerRequest: null,
     });
-    // redis = new Redis({
-    //     host: process.env.REDIS_HOST,
-    //     port: process.env.REDIS_PORT,
-    //     password: process.env.REDIS_PASSWORD,
-    // });
+
     redis.on('connect', () => {
         console.log('Connected to Redis!');
     });
@@ -59,7 +70,6 @@ const worker = new Worker(
     }
 );
 
-// Worker event listeners
 worker.on("active", (job) => {
     console.log(`Job is active: ${job.id}, Domain: ${job.data.domain}`);
 });

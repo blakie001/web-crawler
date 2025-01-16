@@ -8,13 +8,10 @@ export const extractProductsLinks = (links, domain) =>{
         }
         return link;
     })
-    // console.log("Absolute Links:", absoluteLinks);
 
     const validLinks = absoluteLinks.filter(link =>
         link && !link.includes('#') && !link.includes('mailto:')
     )
-
-    // console.log("validLinks ar :", validLinks);
 
     const productLinks = validLinks.filter((link) =>
         productPatterns.some((pattern) => pattern.test(link))

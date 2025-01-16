@@ -9,7 +9,7 @@ export const crawlController = async(req, res) =>{
         await Promise.all(domains.map((domain) => {
             addToQueue(domain);
         }))
-        return res.status(200).json("Domains Added TO Queue");
+        return res.status(200).json(" All Domains Added TO Queue");
     } catch (error) {
         console.log("Error adding domains to queue:", error.message);
         res.status(500).json("Failed to add domains to queue");

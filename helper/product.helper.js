@@ -9,6 +9,11 @@ export const productPatterns = [
     /\/dp\/[A-Z0-9]{10}/,
     /\/p\/[a-z0-9]+/,
     /\/buy\//i,
+    /\/ip\//i,
+    /\/u\//i,
+    /\/t\//i,
+    /\/proddetail\//i,
+    
 ]
 
 export const categoryPatterns = [
@@ -109,4 +114,6 @@ export const categoryPatterns = [
     /\/hair\//i,
     /\/natural\//i,
     /\/brand\//i,
+    /\/w\//i,
+    /\/pl\//i,
 ]

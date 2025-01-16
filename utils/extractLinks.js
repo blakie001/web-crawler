@@ -9,7 +9,6 @@ export const extractLinks = async(html) =>{
           links.push(href);
         }
     })
-    // console.log("Extracted Links:", links);
-
+    
     return links;
 }
