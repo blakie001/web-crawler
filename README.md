@@ -1,4 +1,4 @@
-      <--      Web Crawler with BullMQ      -->
+         <--      Web Crawler with BullMQ      -->
  
 This project is a web crawler built using Node.js, BullMQ, and Puppeteer.
 It allows users to fetch product URLs from e-commerce websites by adding domains to a Redis-backed task queue.
@@ -10,6 +10,8 @@ Features
  -> Concurrency control for crawling.
  -> Scalable and efficient processing of multiple domains.
  -> Integration with Puppeteer for page scraping.
+
+### Video Explanation of Code And Approach : "https://www.loom.com/share/9affc82c84ab42759adcc66275f50206?sid=d8f878d5-86d3-42d1-a76c-4e29b6120030"
 
 Installation
 
